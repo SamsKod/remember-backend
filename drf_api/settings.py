@@ -112,6 +112,9 @@ else:
         r"^(http)s?(:\/\/localhost:3000)\/?$",
     ]
 
+if 'DEV' in os.environ and 'CLIENT_ORIGIN_DEV' in os.environ:
+    CORS_ALLOWED_ORIGINS.append('localhost:3000')
+
 CORS_ALLOW_CREDENTIALS = True
 
 ROOT_URLCONF = 'drf_api.urls'
