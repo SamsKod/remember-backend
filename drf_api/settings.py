@@ -71,6 +71,7 @@ INSTALLED_APPS = [
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
+    'schema_graph',
     'cloudinary_storage',
     'django.contrib.staticfiles',
     'cloudinary',
@@ -89,6 +90,7 @@ INSTALLED_APPS = [
     'comments',
     'likes',
     'followers',
+    'taggit',
 ]
 SITE_ID = 1
 

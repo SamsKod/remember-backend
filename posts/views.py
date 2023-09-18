@@ -3,7 +3,8 @@ from rest_framework import generics, permissions, filters
 from django_filters.rest_framework import DjangoFilterBackend
 from drf_api.permissions import IsOwnerOrReadOnly
 from .models import Post
-from .serializers import PostSerializer
+from .serializers import PostSerializer, TagSerializer
+from taggit.models import Tag
 
 
 class PostList(generics.ListCreateAPIView):
@@ -14,6 +15,7 @@ class PostList(generics.ListCreateAPIView):
     queryset = Post.objects.annotate(
         comments_count=Count('comment', distinct=True),
         likes_count=Count('likes', distinct=True),
+        tags_count=Count('tags', distinct=True),
     ).order_by('-created_at')
     serializer_class = PostSerializer
     filter_backends = [
@@ -31,16 +33,22 @@ class PostList(generics.ListCreateAPIView):
     ordering_fields = [
         'comments_count',
         'likes_count',
-        'likes__created_at'
+        'likes__created_at',
+        'tags_count',
     ]
 
     search_fields = [
         'owner__username',
         'title',
+        'tags__name'
     ]
 
     def perform_create(self, serializer):
         serializer.save(owner=self.request.user)
+
+class TagsList(generics.ListAPIView):
+    queryset = Tag.objects.all()
+    serializer_class = TagSerializer
 
 
 class PostDetail(generics.RetrieveUpdateDestroyAPIView):
