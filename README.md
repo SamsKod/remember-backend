@@ -1,25 +1,14 @@
 # remember-backend
 
-
-
-
-
-## Features left to implement
-- 
-
-
 # Testing
+Profile Api:
+List profiles:
+Steps | Expected result | Actual Results | Pass / Fail
+------------- | ------------- | ------------- | -------------
+Connect to https://remember-backend-ff8df02164f2.herokuapp.com/| Site should open with message "Welcome to my drf API!" | As expected | Pass 
+Append uri /profiles | List profiles data | As expected| Pass
 
 
-# Validator Testing
-
-### HTML
-No errors were returned when passing through the official W3C validator.
-### CSS
-No errors were found when passing through the official (Jigsaw) validator. Although there are still some css issues to handle because different browsers render css in different ways. Chrome works best for this application. 
-### Accessibility
-The Lighthouse test tool show good result in accesibility
-![Screenshot](assets/images/screenshot_lighthouse.png)
 
 # Bugs
  * 
