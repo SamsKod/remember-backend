@@ -1,6 +1,9 @@
 # remember-backend
-This backend functionality is build on Django using Django REST Framework with a Postgres SQL database. The frontend React application uses the React library Axios to connect with the Api.
-The live link can be found here - https://remember-backend-ff8df02164f2.herokuapp.com/
+The project Remember application is project for me to learn as much as I can about developing a modern web application. The backend functionality is built on Django using Django REST Framework with a Postgres SQL database. The frontend React application uses the React library Axios to connect with the Api. Issues in Github is used to handle what features to build and prioritise according to the MoSCoW method in structured way. I have used Code Institues application Moments as a boilerplate which I want to modify and extend with new features and futher on a new look. My first goal is to get a application where users can add images, documents and files as a place where you want put things you want to remember.
+
+The live link for the frontend (Web application) can be found here - [https://remember-backend-ff8df02164f2.herokuapp.com/](https://remember-frontend-b9e629f40656.herokuapp.com/) </br>
+The live link for the backend (Web API) can be found here - [https://remember-backend-ff8df02164f2.herokuapp.com/
+](https://remember-backend-ff8df02164f2.herokuapp.com/)
 
 # Testing
 Profile Api:
