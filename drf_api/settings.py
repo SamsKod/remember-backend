@@ -109,7 +109,7 @@ MIDDLEWARE = [
 
 if 'CLIENT_ORIGIN' in os.environ:
     CORS_ALLOWED_ORIGINS = [
-        os.environ.get('CLIENT_ORIGIN')
+        "https://remember-frontend-b9e629f40656.herokuapp.com",
     ]
 
 CORS_ALLOW_CREDENTIALS = True
