@@ -1,10 +1,14 @@
 from django.db.models import Count
-from rest_framework import generics, permissions, filters
+from rest_framework import generics, permissions, filters, status
 from django_filters.rest_framework import DjangoFilterBackend
 from drf_api.permissions import IsOwnerOrReadOnly
 from .models import Post
 from .serializers import PostSerializer, TagSerializer
+
+from rest_framework.decorators import api_view
+from rest_framework.response import Response
 from taggit.models import Tag
+
 
 
 class PostList(generics.ListCreateAPIView):
@@ -15,7 +19,7 @@ class PostList(generics.ListCreateAPIView):
     queryset = Post.objects.annotate(
         comments_count=Count('comment', distinct=True),
         likes_count=Count('likes', distinct=True),
-        tags_count=Count('tags', distinct=True),
+        # tags_count=Count('tags', distinct=True),
     ).order_by('-created_at')
     serializer_class = PostSerializer
     filter_backends = [
@@ -34,7 +38,7 @@ class PostList(generics.ListCreateAPIView):
         'comments_count',
         'likes_count',
         'likes__created_at',
-        'tags_count',
+        # 'tags_count',
     ]
 
     search_fields = [
@@ -46,9 +50,9 @@ class PostList(generics.ListCreateAPIView):
     def perform_create(self, serializer):
         serializer.save(owner=self.request.user)
 
-class TagsList(generics.ListAPIView):
-    queryset = Tag.objects.all()
-    serializer_class = TagSerializer
+# class TagListView(generics.ListAPIView):
+#     queryset = Tag.objects.all()
+#     serializer_class = TagSerializer
 
 
 class PostDetail(generics.RetrieveUpdateDestroyAPIView):
@@ -61,3 +65,26 @@ class PostDetail(generics.RetrieveUpdateDestroyAPIView):
         likes_count=Count('likes', distinct=True),
     ).order_by('-created_at')
     serializer_class = PostSerializer
+
+@api_view(['POST'])
+def create_tag(request):
+    tag_name = request.data.get('tag')
+    if tag_name:
+        tag, created = Tag.objects.get_or_create(name=tag_name)
+        if created:
+            return Response({'message': f'Tag "{tag_name}" created successfully.'}, status=status.HTTP_201_CREATED)
+        else:
+            return Response({'message': f'Tag "{tag_name}" already exists.'}, status=status.HTTP_200_OK)
+    else:
+        return Response({'error': 'Tag name is required.'}, status=status.HTTP_400_BAD_REQUEST)
+
+
+class TagListView(generics.ListAPIView):
+#     def get(self, request, format=None):
+        # Fetch all tags
+    queryset = Tag.objects.all()
+
+         # Serialize the tags
+    serializer_class = TagSerializer
+
+#         return Response(serializer_class.data)
